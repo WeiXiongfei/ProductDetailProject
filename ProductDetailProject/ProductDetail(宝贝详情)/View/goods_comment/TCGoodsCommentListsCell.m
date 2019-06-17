@@ -5,58 +5,111 @@
 #import "03 Constant.h"
 #import "02 Macro.h"
 #import "UIImageView+WebCache.h"
+#import "QCGoodsCommmentCell.h"
 
-@interface TCGoodsCommentListsCell()
-@property (weak, nonatomic) IBOutlet UIImageView *iconImage;
-@property (weak, nonatomic) IBOutlet UILabel *nameLab;
-@property (weak, nonatomic) IBOutlet UILabel *timeLab;
-@property (weak, nonatomic) IBOutlet UILabel *commentLab;
-@property (weak, nonatomic) IBOutlet UILabel *attarLab;
-@property (weak, nonatomic) IBOutlet UIView *imgsView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imgsViewHConstraint;
+@interface TCGoodsCommentListsCell()<UICollectionViewDelegate,UICollectionViewDataSource>
+
+@property (nonatomic,strong)UICollectionView *collectionView;
 
 @end
+
+static NSString *QCGoodsCommmentCellIdentifier = @"QCGoodsCommmentCellIdentifier";
+#define itemH 122
+#define itemW 257
 
 @implementation TCGoodsCommentListsCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    ViewRadius(_iconImage, 17.5);
+  
+    
 }
 
-- (void)setCommentModel:(Comment *)commentModel {
-    _commentModel = commentModel;
+
+#pragma mark-------UICollectionViewDelegate
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
     
-    __weak typeof(self) _weakSelf = self;
-    [_iconImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", URL_IMG_PREFIX, commentModel.avatar]] placeholderImage:ZHENG_HOLDER_IMAGE completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        if (image && cacheType == SDImageCacheTypeNone) {
-            _weakSelf.iconImage.alpha = 0;
-            [UIView animateWithDuration:1.0 animations:^{
-                _weakSelf.iconImage.alpha = 1.0f;
-            }];
-        } else {
-            _weakSelf.iconImage.alpha = 1.0f;
-        }
-    }];
+    return 10;
     
-    _nameLab.text = commentModel.buyer_name;
-//    _timeLab.text = [NSString changeTimeStampToYMDTime:s_Integer(commentModel.comment_time)];
-    _commentLab.text = commentModel.comment;
-    _attarLab.text = commentModel.specification;
-    
-    if (commentModel.images.count) {
-        _imgsViewHConstraint.constant = 85;
-        for (int i = 0; i < commentModel.images.count; i++) {
-            UIImageView *img = [[UIImageView alloc]initWithImage:[UIImage imageNamed:GOODS_PLACE_HOLDER]];
-            img.frame = CGRectMake((i *70 *TCRatio) + i *10, 10, 70 *TCRatio, 70 *TCRatio);
-            [_imgsView addSubview:img];
-            img.userInteractionEnabled = YES;
-//            UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showImgDeailty:)];
-//            [_imgsView addGestureRecognizer:tapGes];
-        }
-    } else {
-        _imgsViewHConstraint.constant = 0;
-    }
 }
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    
+    return 10;
+    
+    
+}
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return CGSizeMake(itemW, itemH);
+    
+}
+
+#pragma mark---didSelectItemAtIndexPat
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //    if ([self.delegate respondsToSelector:@selector(homeHeaderView:cycleScrollView:didSelectShufflingFigureModel:)]) {
+    //
+    //        [self.delegate homeHeaderView:self collectionView:collectionView didSelectWithData:self.couponDataArr[indexPath.row]];
+    //    }
+}
+
+
+#pragma mark ----UICollectionViewDataSource
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;//设置section 个数
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    
+    // return self.couponDataArr.count;
+    return 5;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    QCGoodsCommmentCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:QCGoodsCommmentCellIdentifier forIndexPath:indexPath];
+    // cell.model = self.couponDataArr[indexPath.row];
+    
+    return cell;
+}
+
+
+- (void)setCommentModel:(Comment *)commentModel {
+ 
+    [self.collectionView reloadData];
+}
+
+- (UICollectionView *)collectionView
+{
+    if (!_collectionView) {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        
+        
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 0);
+        flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;//滑动的方向
+        //初始化 UICollectionView
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, itemH) collectionViewLayout:flowLayout];
+        _collectionView.backgroundColor = [UIColor whiteColor];
+        _collectionView.delegate = self; //设置代理
+        _collectionView.dataSource = self;   //设置数据来源
+        _collectionView.bounces = YES;   //设置弹跳
+        _collectionView.alwaysBounceHorizontal = YES;
+        _collectionView.showsHorizontalScrollIndicator = NO;
+        //注册 cell  为了cell的重用机制  使用NIB  也可以使用代码 registerClass xxxx
+        [_collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([QCGoodsCommmentCell class]) bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:QCGoodsCommmentCellIdentifier];
+        [self.contentView addSubview:_collectionView];
+    }
+    return _collectionView;
+}
+
+
 
 @end

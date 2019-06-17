@@ -48,11 +48,11 @@
 //处理版本问题
 - (void)handlerVersionConfig
 {
-    if (@available(iOS 11.0, *)) {
-        UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    } else {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+//    if (@available(iOS 11.0, *)) {
+//        UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//    } else {
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+//    }
 }
 
 - (HRBaseViewController *(^)(NSDictionary *attarDic))setupNavAttar {

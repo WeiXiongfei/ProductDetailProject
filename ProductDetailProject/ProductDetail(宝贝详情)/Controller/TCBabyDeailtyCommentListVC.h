@@ -6,13 +6,13 @@
 //  Copyright © 2018年 HJB. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "XFBaseViewController.h"
 #import "TCGoodsCommentListsCell.h"
 #import "TCCommentModel.h"
 
 static NSString *const TCGoodsCommentListsCellID = @"TCGoodsCommentListsCell";
 
-@interface TCBabyDeailtyCommentListVC : BaseViewController<UITableViewDelegate,UITableViewDataSource>
+@interface TCBabyDeailtyCommentListVC : XFBaseViewController<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong)UITableView *commentListView;
 /**     */

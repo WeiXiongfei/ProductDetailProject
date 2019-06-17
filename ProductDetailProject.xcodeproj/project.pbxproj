@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66530E1922B49AFD00E48789 /* XFBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66530E1822B49AFD00E48789 /* XFBaseViewController.m */; };
 		819872F616E153F1B573332E /* Pods_ProductDetailProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 116030AA52E377230240C31D /* Pods_ProductDetailProject.framework */; };
 		EC270B4B20F5F00900AAF959 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC270B4A20F5F00900AAF959 /* AppDelegate.m */; };
 		EC270B5120F5F00900AAF959 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC270B4F20F5F00900AAF959 /* Main.storyboard */; };
@@ -51,7 +52,6 @@
 		EC5860A420F6FFDE001ADE5B /* TCBabyDeailtyShopBasicInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC58607E20F6FFDD001ADE5B /* TCBabyDeailtyShopBasicInfoTableViewCell.xib */; };
 		EC5860A520F6FFDE001ADE5B /* TCBabyDeailtyBottomToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC58607F20F6FFDD001ADE5B /* TCBabyDeailtyBottomToolsView.xib */; };
 		EC5860AC20F70249001ADE5B /* HRBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5860A920F70249001ADE5B /* HRBaseViewController.m */; };
-		EC5860AD20F70249001ADE5B /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5860AA20F70249001ADE5B /* BaseViewController.m */; };
 		EC5860B020F70289001ADE5B /* HRBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5860AF20F70288001ADE5B /* HRBarItem.m */; };
 		EC5860B620F705A1001ADE5B /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5860B520F705A1001ADE5B /* UIViewController+Utils.m */; };
 		EC5860C320F7066D001ADE5B /* UIView+LLSegmentBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5860BB20F7066D001ADE5B /* UIView+LLSegmentBar.m */; };
@@ -81,6 +81,8 @@
 /* Begin PBXFileReference section */
 		116030AA52E377230240C31D /* Pods_ProductDetailProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProductDetailProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A1B13D9BB3C2C4D70AA9F1F /* Pods-ProductDetailProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProductDetailProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProductDetailProject/Pods-ProductDetailProject.release.xcconfig"; sourceTree = "<group>"; };
+		66530E1722B49AFD00E48789 /* XFBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XFBaseViewController.h; sourceTree = "<group>"; };
+		66530E1822B49AFD00E48789 /* XFBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XFBaseViewController.m; sourceTree = "<group>"; };
 		EC270B4620F5F00900AAF959 /* ProductDetailProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProductDetailProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC270B4920F5F00900AAF959 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EC270B4A20F5F00900AAF959 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -155,8 +157,6 @@
 		EC58608420F6FFDD001ADE5B /* TCRecommandTopTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommandTopTableViewCell.h; sourceTree = "<group>"; };
 		EC5860A820F70249001ADE5B /* HRBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBaseViewController.h; sourceTree = "<group>"; };
 		EC5860A920F70249001ADE5B /* HRBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBaseViewController.m; sourceTree = "<group>"; };
-		EC5860AA20F70249001ADE5B /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
-		EC5860AB20F70249001ADE5B /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		EC5860AE20F70288001ADE5B /* HRBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBarItem.h; sourceTree = "<group>"; };
 		EC5860AF20F70288001ADE5B /* HRBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBarItem.m; sourceTree = "<group>"; };
 		EC5860B120F702E8001ADE5B /* HRBaseViewControllerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HRBaseViewControllerProtocol.h; sourceTree = "<group>"; };
@@ -405,13 +405,13 @@
 		EC5860A720F70210001ADE5B /* BaseVC */ = {
 			isa = PBXGroup;
 			children = (
-				EC5860AB20F70249001ADE5B /* BaseViewController.h */,
-				EC5860AA20F70249001ADE5B /* BaseViewController.m */,
 				EC5860A820F70249001ADE5B /* HRBaseViewController.h */,
 				EC5860A920F70249001ADE5B /* HRBaseViewController.m */,
 				EC5860AE20F70288001ADE5B /* HRBarItem.h */,
 				EC5860AF20F70288001ADE5B /* HRBarItem.m */,
 				EC5860B120F702E8001ADE5B /* HRBaseViewControllerProtocol.h */,
+				66530E1722B49AFD00E48789 /* XFBaseViewController.h */,
+				66530E1822B49AFD00E48789 /* XFBaseViewController.m */,
 			);
 			path = BaseVC;
 			sourceTree = "<group>";
@@ -465,14 +465,14 @@
 		EC5860BA20F7066D001ADE5B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				EC5860BB20F7066D001ADE5B /* UIView+LLSegmentBar.m */,
-				EC5860BC20F7066D001ADE5B /* LLSegmentBarConfig.h */,
 				EC5860BD20F7066D001ADE5B /* LLSegmentBar.h */,
-				EC5860BE20F7066D001ADE5B /* LLSegmentBarVC.h */,
-				EC5860BF20F7066D001ADE5B /* LLSegmentBarConfig.m */,
-				EC5860C020F7066D001ADE5B /* UIView+LLSegmentBar.h */,
 				EC5860C120F7066D001ADE5B /* LLSegmentBar.m */,
+				EC5860BC20F7066D001ADE5B /* LLSegmentBarConfig.h */,
+				EC5860BF20F7066D001ADE5B /* LLSegmentBarConfig.m */,
+				EC5860BE20F7066D001ADE5B /* LLSegmentBarVC.h */,
 				EC5860C220F7066D001ADE5B /* LLSegmentBarVC.m */,
+				EC5860C020F7066D001ADE5B /* UIView+LLSegmentBar.h */,
+				EC5860BB20F7066D001ADE5B /* UIView+LLSegmentBar.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -480,15 +480,15 @@
 		EC5860C720F70756001ADE5B /* SemiModal */ = {
 			isa = PBXGroup;
 			children = (
-				EC5860C820F70756001ADE5B /* XPSemiModalPresentationController.m */,
-				EC5860C920F70756001ADE5B /* UIViewController+XPSemiModal.m */,
-				EC5860CA20F70756001ADE5B /* XPSemiModalConfiguration.h */,
-				EC5860CB20F70756001ADE5B /* XPSemiModalAnimatedTransitioning.m */,
-				EC5860CC20F70756001ADE5B /* XPSemiModalTransitioningDelegate.h */,
-				EC5860CD20F70756001ADE5B /* XPSemiModalConfiguration.m */,
 				EC5860CE20F70756001ADE5B /* UIViewController+XPSemiModal.h */,
-				EC5860CF20F70756001ADE5B /* XPSemiModalPresentationController.h */,
+				EC5860C920F70756001ADE5B /* UIViewController+XPSemiModal.m */,
 				EC5860D020F70756001ADE5B /* XPSemiModalAnimatedTransitioning.h */,
+				EC5860CB20F70756001ADE5B /* XPSemiModalAnimatedTransitioning.m */,
+				EC5860CA20F70756001ADE5B /* XPSemiModalConfiguration.h */,
+				EC5860CD20F70756001ADE5B /* XPSemiModalConfiguration.m */,
+				EC5860CF20F70756001ADE5B /* XPSemiModalPresentationController.h */,
+				EC5860C820F70756001ADE5B /* XPSemiModalPresentationController.m */,
+				EC5860CC20F70756001ADE5B /* XPSemiModalTransitioningDelegate.h */,
 				EC5860D120F70756001ADE5B /* XPSemiModalTransitioningDelegate.m */,
 			);
 			path = SemiModal;
@@ -725,6 +725,7 @@
 				EC58609820F6FFDD001ADE5B /* TCBabyDeailtyShopBasicInfoTableViewCell.m in Sources */,
 				EC58608720F6FFDD001ADE5B /* TCBabyDeailtyRootVC.m in Sources */,
 				EC58608920F6FFDD001ADE5B /* TCBabyDeailtyComentVC.m in Sources */,
+				66530E1922B49AFD00E48789 /* XFBaseViewController.m in Sources */,
 				EC5860D620F70756001ADE5B /* XPSemiModalTransitioningDelegate.m in Sources */,
 				EC270B6420F60CA000AAF959 /* ProductListViewController.m in Sources */,
 				EC5860F120F736AF001ADE5B /* TCAttributeModel.m in Sources */,
@@ -741,7 +742,6 @@
 				EC5860D220F70756001ADE5B /* XPSemiModalPresentationController.m in Sources */,
 				EC5860D520F70756001ADE5B /* XPSemiModalConfiguration.m in Sources */,
 				EC58603A20F6F294001ADE5B /* TCGoodsAddressModel.m in Sources */,
-				EC5860AD20F70249001ADE5B /* BaseViewController.m in Sources */,
 				EC5860D320F70756001ADE5B /* UIViewController+XPSemiModal.m in Sources */,
 				EC5860D920F707BF001ADE5B /* NSObject+HXExtension.m in Sources */,
 				EC5860F320F736AF001ADE5B /* TCPropertyFooter.m in Sources */,

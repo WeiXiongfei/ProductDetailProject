@@ -1,10 +1,10 @@
 /*
  宝贝详情跟视图
  */
-#import "BaseViewController.h"
+#import "XFBaseViewController.h"
 #import "TCGoodsModel.h"
 
-@interface TCBabyDeailtyRootVC : BaseViewController
+@interface TCBabyDeailtyRootVC : XFBaseViewController
 /**   */
 @property (nonatomic, copy) NSString *goodsID;
 /**   */

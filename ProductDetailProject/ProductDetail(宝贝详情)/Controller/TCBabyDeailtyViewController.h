@@ -1,7 +1,7 @@
 /*
  宝贝详情
  */
-#import "BaseViewController.h"
+#import "XFBaseViewController.h"
 #import "LLSegmentBar.h"
 //#import "BaseNatigationViewController.h"
 #import "TCGoodsModel.h"
@@ -12,7 +12,7 @@
 - (void)TCBabyDeailtyViewControllerOffsetY:(float)offsetY hiddenNavBar:(BOOL)hiddenNavBar;
 @end
 
-@interface TCBabyDeailtyViewController : BaseViewController
+@interface TCBabyDeailtyViewController : XFBaseViewController
 
 @property (nonatomic,strong)LLSegmentBar *segmentBar;
 

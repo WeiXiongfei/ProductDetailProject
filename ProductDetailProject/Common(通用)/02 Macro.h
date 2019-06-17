@@ -14,7 +14,7 @@
 
 #define UI_IS_IPHONE_PLUS       (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 736.0 || [[UIScreen mainScreen] bounds].size.width == 736.0)
 
-#define kIs_iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kIs_iPhoneX 1
 //导航栏高度
 #define kStatusBarAndNavigationBarHeight (kIs_iPhoneX ? 88.f : 64.f)
 //状态栏高度

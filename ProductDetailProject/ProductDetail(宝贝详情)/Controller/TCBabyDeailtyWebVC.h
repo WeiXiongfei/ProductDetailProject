@@ -6,11 +6,11 @@
 //  Copyright © 2018年 HJB. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "XFBaseViewController.h"
 #import "LLSegmentBar.h"
 //#import "BaseNatigationViewController.h"
 
-@interface TCBabyDeailtyWebVC : BaseViewController
+@interface TCBabyDeailtyWebVC : XFBaseViewController
 
 @property (nonatomic,strong)LLSegmentBar *segmentBar;
 

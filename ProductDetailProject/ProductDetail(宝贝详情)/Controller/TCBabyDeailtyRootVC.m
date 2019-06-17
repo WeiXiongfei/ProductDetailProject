@@ -46,11 +46,17 @@
     [super viewDidLoad];
     
     __weak typeof(self) _weakSelf = self;
-    [self leftImageItem:@"blackBackImg" action:^{
+    [self leftImageItem:@"deta_02" action:^{
         [_weakSelf.navigationController popViewControllerAnimated:YES];
     }];
     
-    [self rightImageItem:@"goodsShareimage" action:^{//分享
+    HRBarItem *item = [[HRBarItem alloc] init];
+    [item setBackgroundImage:[UIImage imageNamed:@"deta_01"] forState:UIControlStateNormal];
+    
+    HRBarItem *item2 = [[HRBarItem alloc] init];
+    [item2 setBackgroundImage:[UIImage imageNamed:@"deta_03"] forState:UIControlStateNormal];
+    
+    [self rightItems:@[item,item2] actions:^(NSInteger index) {
         
     }];
     
@@ -73,7 +79,7 @@
         UIViewController *vc = [tempVCs objectAtIndex:0];
         [viewArray removeObject:vc];
     }
-    self.navigationController.viewControllers = viewArray;
+    //self.navigationController.viewControllers = viewArray;
 }
 -(void)viewWillAppear:(BOOL)animated {
      [super viewWillAppear:animated];
@@ -85,6 +91,10 @@
     [super viewDidAppear:animated];
     
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBarHidden = YES;
+}
+
 #pragma mark - 网络请求
 /**
  刷新页面视图
@@ -100,12 +110,14 @@
 }
 -(void)setUI {
     
-    UIView *titleView = [[UIView alloc] initWithFrame:(CGRect){0, 0, 320, 35}];
+    
+    
+    UIView *titleView = [[UIView alloc] initWithFrame:(CGRect){0, 0, 240, 35}];
     titleView.clipsToBounds = YES;
     titleView.alpha = 0;
     self.titleView = titleView;
     
-    self.segmentVC.segmentBar.frame = CGRectMake(0, 0, 320, 35);
+    self.segmentVC.segmentBar.frame = CGRectMake(0, 0, 240, 35);
     self.segmentVC.segmentBar.alpha = 0;
     [titleView addSubview:self.segmentVC.segmentBar];
     
@@ -123,7 +135,8 @@
     NSArray *items = @[@"商品", @"详情", @"评论"];
     [self.segmentVC setUpWithItems:items childVCs:@[self.vc1,self.webVC,self.vc3]];
     [self.segmentVC.segmentBar updateWithConfig:^(LLSegmentBarConfig *config) {
-        config.itemNormalColor(MAIN_TEXT_COLOR).itemSelectColor(kMAIN_RED_COLOR).indicatorColor(kMAIN_RED_COLOR);
+    config.itemNormalColor(MAIN_TEXT_COLOR).itemSelectColor(kMAIN_RED_COLOR).indicatorColor(kMAIN_RED_COLOR);
+        
     }];
 }
 #pragma mark - TCBabyDeailtyViewControllerDelegate

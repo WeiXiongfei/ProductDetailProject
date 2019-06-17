@@ -10,4 +10,6 @@
 
 @interface TCRecommandTopTableViewCell : UITableViewCell
 
+@property (nonatomic,strong)BaseModel *model;
+
 @end

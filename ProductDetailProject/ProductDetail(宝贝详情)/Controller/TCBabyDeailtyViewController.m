@@ -8,7 +8,7 @@
 #import "03 Constant.h"
 #import "02 Macro.h"
 #import "Masonry.h"
-#import "YYText.h"
+#import <YYKit.h>
 #import "MJRefresh.h"
 #import "MJExtension.h"
 #import "UITableView+FDTemplateLayoutCell.h"
@@ -201,7 +201,7 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
 #pragma mark - UITableViewDelegate  DataSouce
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 //    return 9 ;
-    return 10;
+    return 9;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //    if (section == 4) {
@@ -220,7 +220,7 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
 //    return 1;
     
     if (section == 5) {
-        return _goodsModel.comment.count;
+        return 1;
     } else if (section == 3) {
         if ([_goodsModel.goodsInfo.sale_service isEqual:@""] || !_goodsModel.goodsInfo.sale_service) {
             return 0;
@@ -231,7 +231,7 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
         if (self.goodsModel.storeInfo.store_id == 1) {
             return 0;
         }
-    } else if (section == 8 || section == 9) {
+    } else if (section == 8 ) {
         if (self.goodsModel.recommend.count) {
             return 1;
         } else {
@@ -272,9 +272,9 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
     moreJudgeTableViewCell.moreJudgeCellBlock = ^{
         _weakSelf.segmentBar.selectIndex = 2;
     };
-    
-    TCRecommandTableViewCell *recommandCell = [tableView dequeueReusableCellWithIdentifier:TCRecommandTableViewCellID];
-    
+//
+//    TCRecommandTableViewC`ell *recommandCell = [tableView dequeueReusableCellWithIdentifier:TCRecommandTableViewCellID];
+//
     if (indexPath.section == 0) {
         cycleScrollTableViewCell.bannerArray = _goodsModel.goodsInfo.banner;
         
@@ -309,7 +309,7 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
         judgeCountCell.totalCountLbl.text = [NSString stringWithFormat:@"商品评价(%ld)", _goodsModel.commentCount];
         return judgeCountCell;
     } else if (indexPath.section == 5) {// 商品评价内容
-        commentListsCell.commentModel = _goodsModel.comment[indexPath.row];
+       commentListsCell.commentModel = nil;
         return commentListsCell;
     } else if (indexPath.section == 6) {//查看全部评价
         return moreJudgeTableViewCell;
@@ -319,10 +319,8 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
         return shopInfoCell;
     } else if (indexPath.section == 8) {//为您推荐
         TCRecommandTopTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TCRecommandTopTableViewCellID];
+        cell.model = nil;
         return cell;
-    } else {// 为您推荐 内容
-        recommandCell.recommendArray = _goodsModel.recommend;
-        return recommandCell;
     }
     return nil;
 }
@@ -335,8 +333,8 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
     if (self.goodsModel.goodsInfo.store_id == 1) {//判断是否是自营商品，添加自营图标
         NSString *goodsName = self.goodsModel.goodsInfo.goods_name;
         NSMutableAttributedString *goodsNameAttributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", goodsName]];
-        goodsNameAttributeStr.yy_font = [UIFont boldSystemFontOfSize:14];
-        goodsNameAttributeStr.yy_color = MAIN_TEXT_COLOR;
+        goodsNameAttributeStr.font = [UIFont boldSystemFontOfSize:14];
+        goodsNameAttributeStr.color = MAIN_TEXT_COLOR;
         
         NSTextAttachment *attach = [[NSTextAttachment alloc] init];
         attach.image = [UIImage imageNamed:@"self_buy_normal"];
@@ -354,31 +352,30 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
     if (indexPath.section == 0) {
         return SCREEN_WIDTH;
     } else if (indexPath.section == 1) {
-        return [tableView fd_heightForCellWithIdentifier:TCGoodsInfoTableViewCellID cacheByIndexPath:indexPath configuration:^(TCGoodsInfoTableViewCell *cell) {
-            [self configureGoodsInfoCell:cell atIndexPath:indexPath];
-        }];
+        return UITableViewAutomaticDimension;
 //        return 300;
 //        [self configGoodsInfoCellWithModel];
     } else if (indexPath.section == 2) {
-        return 142;
-    } else if ( indexPath.section == 6 || indexPath.section == 8) {
+        return UITableViewAutomaticDimension;
+    } else if ( indexPath.section == 6 ) {
         return 44;
     } else if (indexPath.section == 3) {
         return 50;
     } else if (indexPath.section == 4) {
         return 40;
     } else if (indexPath.section == 5) {
-        return [tableView fd_heightForCellWithIdentifier:TCGoodsCommentListsCellID cacheByIndexPath:indexPath configuration:^(TCGoodsCommentListsCell *cell) {
-            cell.commentModel = self.goodsModel.comment[indexPath.row];
-        }];
+        return 132.f;
     } else if (indexPath.section == 7) {
-        return 205;
+        return 276.f;
+    }else if(indexPath.section == 8){
+        return 252.f;
     }
+        
      return (SCREEN_WIDTH - 20)/3 + 65 + 15;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 4 || section == 8) {// 商品评价 个数
+    if (section == 8) {// 商品评价 个数
         return 1.0f;
     }else if (section == 7) {
         return 10.0f;
@@ -531,6 +528,7 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
         _contentTableView.contentSize = CGSizeMake(SCREEN_WIDTH, (SCREEN_HEIGHT - kTabbarHeight) * 2);
         _contentTableView.delegate   = self;
         _contentTableView.dataSource = self;
+        _contentTableView.estimatedRowHeight = 200.f;
         _contentTableView.backgroundColor = LINE_BACK_COLOR;
         _contentTableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
         _contentTableView.showsVerticalScrollIndicator = NO;

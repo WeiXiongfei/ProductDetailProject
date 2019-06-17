@@ -9,7 +9,7 @@
 #import "TCGoodsInfoTableViewCell.h"
 #import "03 Constant.h"
 #import "02 Macro.h"
-#import "YYText.h"
+#import <YYKit.h>
 
 @interface TCGoodsInfoTableViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *collectImgView;
@@ -76,16 +76,16 @@
         _collectBtn.selected = NO;
     }
     
-    if (goodsModel.goodsInfo.store_id == 1) {//判断是否是自营商品，添加自营图标
+    if (/*goodsModel.goodsInfo.store_id ==*/ 1) {//判断是否是自营商品，添加自营图标
 
         NSString *goodsName = goodsModel.goodsInfo.goods_name;
         NSMutableAttributedString *goodsNameAttributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", goodsName]];
-        goodsNameAttributeStr.yy_font = [UIFont boldSystemFontOfSize:14];
-        goodsNameAttributeStr.yy_color = MAIN_TEXT_COLOR;
+        goodsNameAttributeStr.font = [UIFont boldSystemFontOfSize:16];
+        goodsNameAttributeStr.color = MAIN_TEXT_COLOR;
 
         NSTextAttachment *attach = [[NSTextAttachment alloc] init];
-        attach.image = [UIImage imageNamed:@"self_buy_normal"];
-        attach.bounds = CGRectMake(0, -3, 45, 15);
+        attach.image = [UIImage imageNamed:@"deta_04"];
+        attach.bounds = CGRectMake(0, -2, 33, 15);
         NSAttributedString *attributeStr2 = [NSAttributedString attributedStringWithAttachment:attach];
         [goodsNameAttributeStr insertAttributedString:attributeStr2 atIndex:0];
         _goodsNameLbl.attributedText = goodsNameAttributeStr;
@@ -95,8 +95,8 @@
     
     if (goodsModel.goodsInfo.store_id == 72) {// 天元商品
         NSMutableAttributedString *goodsNameAttributeStr = [[NSMutableAttributedString alloc] initWithString:@" 天元"];
-        goodsNameAttributeStr.yy_font = [UIFont boldSystemFontOfSize:14];
-        goodsNameAttributeStr.yy_color = NORMAL_TEXT_COLOR;
+        goodsNameAttributeStr.font = [UIFont boldSystemFontOfSize:14];
+        goodsNameAttributeStr.color = NORMAL_TEXT_COLOR;
         NSTextAttachment *attach = [[NSTextAttachment alloc] init];
         attach.image = [UIImage imageNamed:@"tianyuan_color"];
         attach.bounds = CGRectMake(0, -3, 15, 15);

@@ -1,22 +1,28 @@
+//
+//  XFBaseViewController.m
+//  ProductDetailProject
+//
+//  Created by 张健 on 2019/6/15.
+//  Copyright © 2019年 HuaxiGroup. All rights reserved.
+//
 
-
-#import "BaseViewController.h"
+#import "XFBaseViewController.h"
 #import "03 Constant.h"
 
-@interface BaseViewController ()
-
-@end
-
-@implementation BaseViewController
-
+@interface XFBaseViewController ()
 #pragma mark - ---------- Lazy Loading（懒加载） ----------
 
 #pragma mark - ----------   Lifecycle（生命周期） ----------
-//
+@end
+
+@implementation XFBaseViewController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = RGB0X(0xf4f4f4);
+     self.view.backgroundColor = RGB0X(0xf4f4f4);
+    // Do any additional setup after loading the view.
 }
+
 //
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -48,6 +54,4 @@
 
 #pragma mark - ---------- Protocol Methods（代理方法） ----------
 
-
 @end
-

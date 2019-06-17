@@ -8,22 +8,36 @@
 
 #import "TCBabyDeailtyCell.h"
 
+@interface TCBabyDeailtyCell ()
+@property (weak, nonatomic) IBOutlet UILabel *guigeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *daodaLabel;
+@property (weak, nonatomic) IBOutlet UILabel *运费;
+
+@end
+
 @implementation TCBabyDeailtyCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
 }
+
+/// 点击规格
 - (IBAction)chooseGuigeBtnClick {
     if (_babyDealtyCellGuiGeBlock) {
         _babyDealtyCellGuiGeBlock();
     }
 }
+
+/// 点击配送
 - (IBAction)goodsParamBtnClick {
     if (_babyDealtyCellGoodsParamBlock) {
         _babyDealtyCellGoodsParamBlock();
     }
 }
+
+/// 点击运费
 - (IBAction)youhuijuanBtnClick {
     if (_babyDealtyCellYouhuiBlock) {
         _babyDealtyCellYouhuiBlock();
