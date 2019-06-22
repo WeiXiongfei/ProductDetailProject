@@ -11,4 +11,5 @@
 @property (nonatomic, copy) NSString *goods_img;
 /**     */
 @property (strong, nonatomic) TCGoodsModel *goodsModel;
+
 @end

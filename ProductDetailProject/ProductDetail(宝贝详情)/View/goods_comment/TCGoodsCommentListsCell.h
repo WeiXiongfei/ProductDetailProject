@@ -8,4 +8,7 @@
 @interface TCGoodsCommentListsCell : UITableViewCell
 /**   购物详情评论模型  */
 @property (strong, nonatomic) Comment *commentModel;
+
+@property (nonatomic, copy)NSArray *dataArr;
+
 @end

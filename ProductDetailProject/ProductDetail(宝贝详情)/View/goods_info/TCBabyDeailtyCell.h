@@ -10,6 +10,9 @@
 
 @interface TCBabyDeailtyCell : UITableViewCell
 
+
+@property (weak, nonatomic) IBOutlet UILabel *guigeLabel;
+
 @property (nonatomic, copy) void (^babyDealtyCellGuiGeBlock)();
 @property (nonatomic, copy) void (^babyDealtyCellGoodsParamBlock)();
 @property (nonatomic, copy) void (^babyDealtyCellYouhuiBlock)();

@@ -10,5 +10,6 @@
 
 @interface TCBabyDetailJudgeCountTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *totalCountLbl;
+@property (weak, nonatomic) IBOutlet UILabel *good_comment;
 
 @end

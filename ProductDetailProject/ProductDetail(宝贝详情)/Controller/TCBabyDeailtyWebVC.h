@@ -19,4 +19,5 @@
 @property (nonatomic,strong)UIViewController *fatherVC;
 /**   */
 @property (nonatomic, copy) NSString *htmlStr;
+
 @end

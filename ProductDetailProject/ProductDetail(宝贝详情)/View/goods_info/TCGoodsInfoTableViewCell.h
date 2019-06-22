@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TCGoodsModel.h"
+#import "QCShopDetailsModel.h"
 @class TCGoodsInfoTableViewCell;
 @protocol  TCGoodsInfoTableViewCellDelegate<NSObject>
 @optional
@@ -18,6 +19,7 @@
 @interface TCGoodsInfoTableViewCell : UITableViewCell
 /**     */
 @property (strong, nonatomic) TCGoodsModel *goodsModel;
+@property (nonatomic,strong) QCShopDetailsModel *model;
 /**     */
 @property (strong, nonatomic) Position *position;
 /**   */

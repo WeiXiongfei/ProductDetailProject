@@ -25,6 +25,12 @@ static NSString *QCGoodsCommmentCellIdentifier = @"QCGoodsCommmentCellIdentifier
     
 }
 
+- (void)setDataArr:(NSArray *)dataArr{
+    
+    _dataArr = dataArr;
+    [self.collectionView reloadData];
+}
+
 
 #pragma mark-------UICollectionViewDelegate
 
@@ -68,15 +74,13 @@ static NSString *QCGoodsCommmentCellIdentifier = @"QCGoodsCommmentCellIdentifier
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    
-    // return self.couponDataArr.count;
-    return 5;
+    return self.dataArr.count>5 ? 5 :self.dataArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     QCGoodsCommmentCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:QCGoodsCommmentCellIdentifier forIndexPath:indexPath];
-    // cell.model = self.couponDataArr[indexPath.row];
+     cell.model = self.dataArr[indexPath.row];
     
     return cell;
 }

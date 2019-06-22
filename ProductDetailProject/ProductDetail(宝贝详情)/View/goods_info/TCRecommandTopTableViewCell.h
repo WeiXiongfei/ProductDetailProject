@@ -12,4 +12,7 @@
 
 @property (nonatomic,strong)BaseModel *model;
 
+@property (nonatomic,copy)NSArray *recommentArr;
+@property (nonatomic,copy)NSArray *catCommentArr;
+
 @end

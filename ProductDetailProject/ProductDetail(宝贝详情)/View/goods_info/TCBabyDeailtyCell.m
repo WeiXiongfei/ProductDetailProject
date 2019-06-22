@@ -7,9 +7,9 @@
 //
 
 #import "TCBabyDeailtyCell.h"
-
+#import "QCShopDetailsModel.h"
 @interface TCBabyDeailtyCell ()
-@property (weak, nonatomic) IBOutlet UILabel *guigeLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *daodaLabel;
 @property (weak, nonatomic) IBOutlet UILabel *运费;
@@ -20,8 +20,10 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+  
     // Initialization code
 }
+
 
 /// 点击规格
 - (IBAction)chooseGuigeBtnClick {
@@ -43,6 +45,7 @@
         _babyDealtyCellYouhuiBlock();
     }
 }
+
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

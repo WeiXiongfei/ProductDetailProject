@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <SDCycleScrollView/SDCycleScrollView.h>
 #import "TCHomeModel.h"
-
+#import "QCShopDetailsModel.h"
 @interface TCCycleScrollTableViewCell : UITableViewCell<SDCycleScrollViewDelegate>
 
 @property (nonatomic,strong) SDCycleScrollView *cycleScrollView;
@@ -23,4 +23,7 @@
 @property (strong, nonatomic) NSArray *bannerArray;
 /**     */
 @property (strong, nonatomic) NSMutableArray *bannerShowUrlArray;
+
+@property (nonatomic, strong)QCShopDetailsImageListModel *model;
+
 @end

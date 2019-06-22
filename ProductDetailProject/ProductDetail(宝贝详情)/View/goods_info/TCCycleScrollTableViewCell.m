@@ -25,13 +25,18 @@
 #pragma mark - 重写set方法
 - (void)setBannerArray:(NSArray *)bannerArray {
     _bannerArray = bannerArray;
-    NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:1];
-    for (NSString *banner in bannerArray) {
-        [tempArray addObject:[NSString stringWithFormat:@"%@%@", URL_IMG_PREFIX, banner]];
+    NSMutableArray *tempArray = [NSMutableArray array];
+    for (QCShopDetailsImageListModel *model in bannerArray) {
+        [tempArray addObject:[NSString stringWithFormat:@"%@%@", SERVERCE_ImageHost,model.img_url]];
     }
     [self.bannerShowUrlArray addObjectsFromArray:tempArray];
     self.cycleScrollView.imageURLStringsGroup = tempArray;
+    self.cycleScrollView.autoScroll = NO;
 }
+
+
+
+
 -(void)setImageGroupUrls:(NSArray<NSString *> *)imageGroupUrls {
     _imageGroupUrls = imageGroupUrls;
     NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:1];

@@ -9,10 +9,18 @@
 #import "TCRecommandTopTableViewCell.h"
 #import "QCBabyDeaityShopCell.h"
 
-@interface TCRecommandTopTableViewCell ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface TCRecommandTopTableViewCell ()<UICollectionViewDelegate,UICollectionViewDataSource>{
+    
+    BOOL _isTongLei;
+}
 
 @property (weak, nonatomic) IBOutlet UIView *collSupview;
 @property (nonatomic,strong)UICollectionView *collectionView;
+
+@property (weak, nonatomic) IBOutlet UIButton *xiangguanButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *tongleiButton;
+
 @end
 static NSString *QCBabyDeaityShopCellIdentifier = @"QCBabyDeaityShopCellIdentifier";
 #define itemH 196
@@ -34,6 +42,41 @@ static NSString *QCBabyDeaityShopCellIdentifier = @"QCBabyDeaityShopCellIdentifi
     
     [self.collectionView reloadData];
 }
+
+- (void)setRecommentArr:(NSArray *)recommentArr{
+    _recommentArr = recommentArr;
+    [self.collectionView reloadData];
+}
+
+- (void)setCatCommentArr:(NSArray *)catCommentArr{
+    _catCommentArr = catCommentArr;
+}
+
+/// 点击相关推荐
+- (IBAction)xiangguanClickButton:(UIButton *)sender {
+    _isTongLei = NO;
+    self.xiangguanButton.titleLabel.font = [UIFont fontWithName:@"PingFang-SC-Bold" size:16.f];
+    self.xiangguanButton.titleLabel.textColor = [UIColor colorWithHexString:@"#1D2023"];
+    
+    self.tongleiButton.titleLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:13.f];
+    self.tongleiButton.titleLabel.textColor = [UIColor colorWithHexString:@"#3F454B"];
+    
+    [self.collectionView reloadData];
+}
+
+/// 点击同类排行
+- (IBAction)tongleiClickButton:(UIButton *)sender {
+    _isTongLei = YES;
+    
+    self.tongleiButton.titleLabel.font = [UIFont fontWithName:@"PingFang-SC-Bold" size:16.f];
+    self.tongleiButton.titleLabel.textColor = [UIColor colorWithHexString:@"#1D2023"];
+    
+    self.xiangguanButton.titleLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:13.f];
+    self.xiangguanButton.titleLabel.textColor = [UIColor colorWithHexString:@"#3F454B"];
+    
+    [self.collectionView reloadData];
+}
+
 
 
 #pragma mark-------UICollectionViewDelegate
@@ -63,10 +106,7 @@ static NSString *QCBabyDeaityShopCellIdentifier = @"QCBabyDeaityShopCellIdentifi
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    //    if ([self.delegate respondsToSelector:@selector(homeHeaderView:cycleScrollView:didSelectShufflingFigureModel:)]) {
-    //
-    //        [self.delegate homeHeaderView:self collectionView:collectionView didSelectWithData:self.couponDataArr[indexPath.row]];
-    //    }
+ 
 }
 
 
@@ -78,15 +118,21 @@ static NSString *QCBabyDeaityShopCellIdentifier = @"QCBabyDeaityShopCellIdentifi
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    
-    // return self.couponDataArr.count;
-    return 5;
+    if (_isTongLei) {
+        return self.catCommentArr.count;
+    }else{
+        return self.recommentArr.count;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     QCBabyDeaityShopCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:QCBabyDeaityShopCellIdentifier forIndexPath:indexPath];
-    // cell.model = self.couponDataArr[indexPath.row];
+    if (_isTongLei) {
+        cell.model = self.catCommentArr[indexPath.row];
+    }else{
+        cell.model = self.recommentArr[indexPath.row];
+    }
     
     return cell;
 }

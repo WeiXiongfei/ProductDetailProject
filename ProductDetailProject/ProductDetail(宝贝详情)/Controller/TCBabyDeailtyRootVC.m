@@ -91,9 +91,6 @@
     [super viewDidAppear:animated];
     
 }
-- (void)viewWillDisappear:(BOOL)animated{
-    self.navigationController.navigationBarHidden = YES;
-}
 
 #pragma mark - 网络请求
 /**

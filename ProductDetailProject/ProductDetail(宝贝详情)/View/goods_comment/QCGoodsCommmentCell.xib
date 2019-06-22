@@ -48,6 +48,17 @@
                         <color key="textColor" red="0.1137254902" green="0.12549019610000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3张" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YH0-if-kZ1">
+                        <rect key="frame" x="227" y="5" width="25" height="13"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.69825556506849318" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="K2p-hu-dko"/>
+                            <constraint firstAttribute="height" constant="13" id="qu4-Dc-pyG"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
@@ -61,9 +72,18 @@
                 <constraint firstItem="rqz-8O-JoH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="Vwa-YI-hAT"/>
                 <constraint firstItem="rqz-8O-JoH" firstAttribute="top" secondItem="0ca-SJ-dnW" secondAttribute="bottom" constant="10" id="Yqq-FD-kQG"/>
                 <constraint firstItem="vwa-0z-a9h" firstAttribute="leading" secondItem="iJN-Qm-dke" secondAttribute="trailing" constant="10" id="d9H-QZ-4eR"/>
+                <constraint firstItem="YH0-if-kZ1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="mGA-St-qrN"/>
                 <constraint firstItem="iJN-Qm-dke" firstAttribute="leading" secondItem="0ca-SJ-dnW" secondAttribute="trailing" constant="9" id="wMC-ht-ehj"/>
+                <constraint firstAttribute="trailing" secondItem="YH0-if-kZ1" secondAttribute="trailing" constant="5" id="wt4-kJ-Wk2"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <connections>
+                <outlet property="commentImage" destination="vwa-0z-a9h" id="Moe-bp-Xe5"/>
+                <outlet property="decs" destination="rqz-8O-JoH" id="qWw-yQ-GRv"/>
+                <outlet property="icon" destination="0ca-SJ-dnW" id="PAs-sP-at2"/>
+                <outlet property="imageCount" destination="YH0-if-kZ1" id="NSN-ns-K6e"/>
+                <outlet property="name" destination="iJN-Qm-dke" id="EDc-Fj-bb8"/>
+            </connections>
             <point key="canvasLocation" x="39.200000000000003" y="46.776611694152926"/>
         </collectionViewCell>
     </objects>

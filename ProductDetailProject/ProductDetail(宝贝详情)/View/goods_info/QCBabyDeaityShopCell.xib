@@ -77,6 +77,12 @@
                 <constraint firstItem="Jlo-Nx-qMD" firstAttribute="centerY" secondItem="zrp-IM-akI" secondAttribute="centerY" id="sMI-bm-YF1"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <connections>
+                <outlet property="cell_image" destination="1GD-1D-lSi" id="WZc-vs-tTd"/>
+                <outlet property="cell_name" destination="fKm-U8-Iou" id="oUN-ir-fGx"/>
+                <outlet property="cell_oldPrice" destination="zrp-IM-akI" id="dFe-aG-HYp"/>
+                <outlet property="cell_price" destination="a9Z-5v-2a1" id="I4v-vd-jOy"/>
+            </connections>
             <point key="canvasLocation" x="130.40000000000001" y="129.53523238380811"/>
         </collectionViewCell>
     </objects>

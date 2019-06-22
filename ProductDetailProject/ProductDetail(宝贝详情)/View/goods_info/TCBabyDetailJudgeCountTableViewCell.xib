@@ -48,6 +48,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="good_comment" destination="Ik7-PK-f46" id="TQo-r6-Vl0"/>
                 <outlet property="totalCountLbl" destination="L0f-Bc-GM9" id="7iW-3q-FOU"/>
             </connections>
             <point key="canvasLocation" x="-80" y="-183.50824587706148"/>

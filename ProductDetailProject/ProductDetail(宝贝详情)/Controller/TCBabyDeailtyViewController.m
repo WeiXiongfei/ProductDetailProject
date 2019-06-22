@@ -28,12 +28,11 @@
 #import "TCBabyDeailtyBottomToolsView.h"
 #import "TCGoodsParameterView.h"
 #import "TCChooseGoodsAttributeViewController.h"
-//#import "TCBabyDeailtyCouponView.h"
-//#import "TCShopHomeViewController.h"
-//#import "TCShopGoodsCategeryViewController.h"
-//#import "TCShopCartViewController.h"
-//#import "TCUserLoginViewController.h"
-//#import "TCGoodsAddressModel.h"
+#import "QCShopDetailsModel.h"
+#import "QCShopCommentModel.h"
+#import "ShoppingCartTool.h"
+
+#import "QCShoppingCartController.h"
 
 #define kEndH 80 //用户手指上拉多少距离进入宝贝详情
 #define NAVBAR_COLORCHANGE_POINT -500
@@ -76,6 +75,18 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
 @property (strong, nonatomic) NSMutableArray *addressDataSource;
 /**     */
 @property (strong, nonatomic) NSMutableArray *bannerImgArray;
+
+@property (nonatomic,strong)QCShopDetailsModel *model;
+
+/// 评论的数据
+@property (nonatomic,copy)NSArray * commentArr;
+@property (nonatomic,copy)NSString *total;
+@property (nonatomic,copy)NSString *good_comment;
+
+/// 选择的规格数据
+@property (nonatomic,strong)QCShopDetailsSkuListModel *skumodel;
+
+
 @end
 
 @implementation TCBabyDeailtyViewController
@@ -87,7 +98,75 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
     [self configUI];
     
     [self fetchAreaListData];
+    
+    [self requestShopDetailsData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selctSkuCation:) name:QC_Notification_ShopSkuSelect object:nil];
 }
+
+- (void)selctSkuCation:(NSNotification *)tion{
+    
+    self.skumodel = tion.userInfo[@"data"];
+    
+    NSInteger isgouwu = [tion.userInfo[@"isGou"] integerValue];
+    
+    if (isgouwu) {
+        ///加入购物车
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        params[@"goods_id"] = self.model.goods_id;
+        params[@"goods_num"] = self.skumodel.shopCount;
+        params[@"spec_vids"] =[NSString stringWithFormat:@"%@,%@",self.skumodel.spec_val_id[0],self.skumodel.spec_val_id[1]];
+        params[@"goods_price"] = self.skumodel.goods_price;
+        //params[@"promotion_id"]= self.model.promotion_list[
+        [BaseModel modelWithPost:params class:[BaseModel class] urlstring:qc_cartAdd seccuss:^(id model) {
+           
+            [YZProgressManager toastInWindowWithMessage:@"加入成功"];
+        } error:^(NSError *err) {
+            
+        }];
+    }
+    [self.contentTableView reloadSection:2 withRowAnimation:UITableViewRowAnimationNone];
+}
+
+
+/// 获取详情页面数据
+- (void)requestShopDetailsData{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"goods_id"] = self.goods_id;
+    MJWeakSelf
+    [QCShopDetailsModel modelWithPost:params class:[QCShopDetailsModel class] urlstring:qc_goodsDetail seccuss:^(id model) {
+        if ([model isKindOfClass:[QCShopDetailsModel class]]) {
+            weakSelf.model = (QCShopDetailsModel  *)model;
+            [weakSelf.contentTableView reloadData];
+            [weakSelf getCommentListData];
+        }
+    } error:^(NSError *err) {
+        
+    }];
+}
+
+
+/// 获取评论数据
+- (void)getCommentListData{
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    //params[@"goods_id"] = self.goods_id;
+    params[@"goods_id"] = @"4";
+    MJWeakSelf
+    [QCShopCommentModel modelWithPost:params class:[QCShopCommentModel class] urlstring:qc_commentList seccuss:^(id model) {
+        if ([model isKindOfClass:[QCShopCommentModel class]]) {
+            QCShopCommentModel*commentModel = (QCShopCommentModel *)model;
+            weakSelf.commentArr =commentModel.list;
+            weakSelf.total = commentModel.total;
+            weakSelf.good_comment = commentModel.good_comment;
+            [weakSelf.contentTableView reloadSection:4 withRowAnimation:UITableViewRowAnimationNone];
+            [weakSelf.contentTableView reloadSection:5 withRowAnimation:UITableViewRowAnimationNone];
+        }
+    } error:^(NSError *err) {
+        
+    }];
+}
+
 
 - (void)setGoodsModel:(TCGoodsModel *)goodsModel {
     _goodsModel = goodsModel;
@@ -132,25 +211,23 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
     }];
     //加入购物车的回调
     [bottomToolsView setCartAddBackAction:^{
-        [_weakSelf goodsAttributeChooseIsFromBuyNowBtn:NO];
+        [_weakSelf goodsAttributeChooseIsFromBuyNowBtn:YES];
     }];
     //立即购买的回调
     [bottomToolsView setBuyGoods:^{
-        [_weakSelf goodsAttributeChooseIsFromBuyNowBtn:YES];
+        [_weakSelf goodsAttributeChooseIsFromBuyNowBtn:NO];
     }];
     
     bottomToolsView.backAction = ^(NSInteger tag) {
-        if (tag == 0) {
-            
+        if (tag == 0) {//进入购物车页面
+            QCShoppingCartController *shopCart = [[QCShoppingCartController alloc] init];
+            shopCart.is_showBarBootom = YES;
+            [_weakSelf.navigationController pushViewController:shopCart animated:YES];
         } else if (tag ==1) {// 进入店铺首页
             [_weakSelf enterShopHomeView];
-        } else {//进入购物车页面
-//            if (!User_ID) {
-//                [self presentLoginVC];
-//                return;
-//            }
-//            TCShopCartViewController *shopCartVC = [TCShopCartViewController new];
-//            [self.navigationController pushViewController:shopCartVC animated:YES];
+            
+        } else {
+            
         }
     };
 }
@@ -162,7 +239,11 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
 //    }
     
     TCChooseGoodsAttributeViewController *chooseGoodsAttributeVC = [TCChooseGoodsAttributeViewController new];
-    chooseGoodsAttributeVC.isFromBuyCart = NO;
+    
+    chooseGoodsAttributeVC.skuArr = self.model.sku_list;
+    chooseGoodsAttributeVC.specArr = self.model.spec_list;
+    
+    chooseGoodsAttributeVC.isFromBuyCart = isFromBuyNow;
     chooseGoodsAttributeVC.fromBuyNowBtn = isFromBuyNow;
     chooseGoodsAttributeVC.fatherVC = self;
 //    chooseGoodsAttributeVC.goods_id = s_Integer(_goodsModel.goodsInfo.goods_id);
@@ -193,10 +274,9 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
     
 }
 - (void)enterShopHomeView {
-//    [EasyTextView showText:@"功能暂未开通"];
-//    TCShopHomeViewController *shopHomeVC = [TCShopHomeViewController new];
-//    shopHomeVC.store_id  = s_Integer(_goodsModel.storeInfo.store_id);
-//    [self.navigationController pushViewController:shopHomeVC animated:YES];
+    
+    self.tabBarController.selectedIndex = 0;
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 #pragma mark - UITableViewDelegate  DataSouce
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -204,20 +284,7 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
     return 9;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if (section == 4) {
-//        return _goodsModel.comment.count;
-//    } else if (section == 6) {
-//        if (self.goodsModel.storeInfo.store_id == 1) {
-//            return 0;
-//        }
-//    } else if (section == 7 || section == 8) {
-//        if (self.goodsModel.recommend.count) {
-//            return 1;
-//        } else {
-//            return 0;
-//        }
-//    }
-//    return 1;
+    
     
     if (section == 5) {
         return 1;
@@ -231,6 +298,7 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
         if (self.goodsModel.storeInfo.store_id == 1) {
             return 0;
         }
+        return 0;/// 暂时隐藏
     } else if (section == 8 ) {
         if (self.goodsModel.recommend.count) {
             return 1;
@@ -256,8 +324,6 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
     shopInfoCell.shopInfoCellBlock = ^(NSInteger index) {
         if (index == 0) {// 商品分类
             
-//            TCShopGoodsCategeryViewController *shopGoodsCategeryVC = [TCShopGoodsCategeryViewController new];
-//            [_weakSelf.navigationController pushViewController:shopGoodsCategeryVC animated:YES];
         } else {// 店铺首页
             
             [_weakSelf enterShopHomeView];
@@ -275,15 +341,23 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
 //
 //    TCRecommandTableViewC`ell *recommandCell = [tableView dequeueReusableCellWithIdentifier:TCRecommandTableViewCellID];
 //
-    if (indexPath.section == 0) {
-        cycleScrollTableViewCell.bannerArray = _goodsModel.goodsInfo.banner;
+    if (indexPath.section == 0) {/// 商品顶部轮播
+        
+        cycleScrollTableViewCell.bannerArray = self.model.goods_image_list;
         
         return cycleScrollTableViewCell;
     } else if (indexPath.section == 1) {
-        [self configureGoodsInfoCell:goodsInfoTableViewCell atIndexPath:indexPath];
+        goodsInfoTableViewCell.model = self.model;
         return goodsInfoTableViewCell;
     } else if (indexPath.section == 2) {//选择规格、收货地址、优惠券领取、产品参数、正品保证 - 七天无理由退换
        TCBabyDeailtyCell *cell = [tableView dequeueReusableCellWithIdentifier:TCBabyDeailtyCellID];
+        
+        if (self.skumodel ==nil) {
+            cell.guigeLabel.text = @"请选择";
+        }else{
+            cell.guigeLabel.text = [NSString stringWithFormat:@"已选 %@%@ %@件",self.skumodel.spec_val_name[1],self.skumodel.spec_val_name[0],self.skumodel.shopCount];
+        }
+        
         cell.babyDealtyCellGuiGeBlock = ^{// 选择规格
             [_weakSelf goodsAttributeChooseIsFromBuyNowBtn:NO];
         };
@@ -292,12 +366,7 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
         };
         
         cell.babyDealtyCellYouhuiBlock = ^{// 优惠券
-//            self.couponView.store_id = s_Integer(_goodsModel.goodsInfo.store_id);
-//            [UIView animateWithDuration:0.3 animations:^{
-//                [KeyWindow addSubview:self.couponView];
-//                _weakSelf.couponView.alpha = 1;
-//                _weakSelf.couponView.downViewConstraint.constant = 200;
-//            }];
+
         };
        return cell;
     } else if (indexPath.section == 3) {
@@ -306,10 +375,11 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
         sallServiceCell.saleServiceLbl.text = saleString;
         return sallServiceCell;
     } else if (indexPath.section == 4) {//商品评价(个数)
-        judgeCountCell.totalCountLbl.text = [NSString stringWithFormat:@"商品评价(%ld)", _goodsModel.commentCount];
+        judgeCountCell.totalCountLbl.text = [NSString stringWithFormat:@"商品评价(%@)", self.total];
+        judgeCountCell.good_comment.text = [NSString stringWithFormat:@"好评率%@",self.good_comment];
         return judgeCountCell;
     } else if (indexPath.section == 5) {// 商品评价内容
-       commentListsCell.commentModel = nil;
+       commentListsCell.dataArr = self.commentArr;
         return commentListsCell;
     } else if (indexPath.section == 6) {//查看全部评价
         return moreJudgeTableViewCell;
@@ -319,7 +389,8 @@ static NSString *const MerchandiseShopBasicInfoTableViewCellID = @"MerchandiseSh
         return shopInfoCell;
     } else if (indexPath.section == 8) {//为您推荐
         TCRecommandTopTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TCRecommandTopTableViewCellID];
-        cell.model = nil;
+        cell.recommentArr = self.model.recomment_list;
+        cell.catCommentArr = self.model.cat_recomment_list;
         return cell;
     }
     return nil;

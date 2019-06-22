@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QCShopCommentModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QCGoodsCommmentCell : UICollectionViewCell
 
+@property (nonatomic,strong)QCShopCommentModel *model;
 @end
 
 NS_ASSUME_NONNULL_END
