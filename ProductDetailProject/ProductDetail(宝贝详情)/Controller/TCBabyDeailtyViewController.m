@@ -31,7 +31,6 @@
 #import "QCShopDetailsModel.h"
 #import "QCShopCommentModel.h"
 #import "ShoppingCartTool.h"
-
 #import "QCShoppingCartController.h"
 
 #define kEndH 80 //用户手指上拉多少距离进入宝贝详情
